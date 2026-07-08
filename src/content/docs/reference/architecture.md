@@ -7,7 +7,7 @@ description: 项目架构、模块划分和调用流程
 
 | 层 | 内容 |
 |------|------|
-| **前端** | React + TypeScript — SearchBox · ResultTable · PriceChart · SettingsDrawer |
+| **前端** | React + TypeScript — ChatBubble · ResultTable · PriceChart · StepsBar · SettingsDrawer |
 | **IPC** | Tauri invoke / event |
 | **后端** | commands/ (前端入口) → agent/ (Agent 编排) → ai/ (LLM Provider) |
 

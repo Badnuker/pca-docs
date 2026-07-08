@@ -21,7 +21,8 @@ price-compare-agent/
 │   │   ├── query.ts      ← 调用后端"搜索商品"命令
 │   │   └── settings.ts   ← 调用后端"读写设置"命令
 │   └── components/
-│       ├── SearchBox.tsx       ← 搜索框 + 按钮
+│       ├── ChatBubble.tsx      ← 消息气泡（用户 + Agent）
+│       ├── StepsBar.tsx         ← 虚线进度条
 │       ├── ResultTable.tsx     ← 结果表格（排序、标签、链接）
 │       ├── PriceChart.tsx      ← 价格柱状图
 │       └── SettingsDrawer.tsx  ← 设置面板（配置 AI 模型）
@@ -72,7 +73,8 @@ price-compare-agent/
 
 每个组件职责单一，像一个乐高积木：
 
-- **SearchBox**：输入框 + "比价"按钮，支持回车触发
+- **ChatBubble**：消息气泡 — 用户消息靠右紫色，Agent 回复靠左白色，内嵌结果组件
+- **StepsBar**：手写进度条 — 已完成实线，未完成虚线，圆点 + 标签双排布局
 - **ResultTable**：用 Ant Design 的 Table 展示商品，不同平台用不同颜色标签，默认按价格升序
 - **PriceChart**：用 ECharts 画柱状图，`useRef` + `useEffect` 模式操作 DOM
 - **SettingsDrawer**：右侧滑出的抽屉面板，配置 API 格式、Key、地址、模型
