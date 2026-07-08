@@ -64,3 +64,5 @@ AgentOrchestrator 包装在 `Arc<RwLock<T>>` 中，保存设置时重建：
 4. 创建新 `AgentOrchestrator`
 5. `RwLock::write()` 替换旧实例
 6. 下次查询使用新配置
+
+> **源码**：[`src-tauri/src/commands/settings.rs:47-60`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/commands/settings.rs#L47-L60) · [`src-tauri/src/lib.rs:15-23`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/lib.rs#L15-L23)

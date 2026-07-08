@@ -107,3 +107,70 @@ Step 3: 完成
 - 京东"Redmi Buds 5" vs 淘宝"红米Buds5" → 同一商品
 - 综合价格、运费、评分 → 推荐理由
 - 规格不同的标注"替代推荐"而非"完全匹配"
+
+> **源码**：[`src-tauri/src/agent/orchestrator.rs:63-131`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/orchestrator.rs#L63-L131)
+
+## Tauri 事件总线（可观测性）
+
+Agent 执行过程中，通过 Tauri 事件总线向前端实时推送进度，前端展示 Steps 进度条。
+
+### 事件一览
+
+| 事件名 | 负载类型 | 说明 |
+|--------|---------|------|
+| `agent-step` | `{ index: number, label: string }` | 流水线步进，index 0-3，前端进度条跟随变化 |
+| `agent-step-error` | `string` | 错误或追问消息，前端展示 Alert |
+
+### 事件触发时机
+
+```
+invoke("search_products")
+  ↓
+emit("agent-step", { index: 0, label: "理解需求" })   ← 开始 LLM 意图解析
+  ↓
+emit("agent-step", { index: 1, label: "筛选商品" })   ← 开始本地粗筛
+  ↓
+emit("agent-step", { index: 2, label: "比价分析" })   ← 开始 LLM 匹配推荐
+  ↓
+emit("agent-step", { index: 3, label: "完成" })       ← 返回结果
+```
+
+**错误分支**：
+
+```
+parse_intent() 返回 is_complete = false
+  → emit("agent-step-error", "请补充...")
+  → 返回 Error，流水线终止
+
+filter_candidates() 返回空 Vec
+  → emit("agent-step-error", "未找到匹配商品...")
+  → 返回 Error
+```
+
+> **源码**：[`src-tauri/src/agent/orchestrator.rs:29-58`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/orchestrator.rs#L29-L58)
+
+## 关键函数参考
+
+### `AgentOrchestrator::run()`
+
+流水线主入口。协调四步转换，处理 LLM 返回的字符串到 `AgentResult` 结构体的解析。
+
+> **源码**：[`src-tauri/src/agent/orchestrator.rs:39-140`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/orchestrator.rs#L39-L140)
+
+### `parse_intent()`
+
+发送用户输入到 LLM，附带严格的 JSON schema 系统提示。提取商品名、品牌、预算、功能需求。
+
+> **源码**：[`src-tauri/src/agent/intent.rs:7-62`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/intent.rs#L7-L62)
+
+### `filter_candidates()`
+
+从 `ParsedIntent` 提取关键词（name、brand、features），对商品执行子串匹配。按命中数排序后截取前 30 条。
+
+> **源码**：[`src-tauri/src/agent/tools.rs:11-48`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/tools.rs#L11-L48)
+
+### `load_products()`
+
+用 `include_str!` 在编译时将 `data/products.json` 嵌入二进制，运行时零开销加载。
+
+> **源码**：[`src-tauri/src/agent/tools.rs:4-8`](https://github.com/Badnuker/price-compare-agent/blob/main/src-tauri/src/agent/tools.rs#L4-L8)

@@ -39,6 +39,7 @@ export default defineConfig({
             { label: '技术栈', slug: 'reference/tech-stack' },
             { label: '架构设计', slug: 'reference/architecture' },
             { label: 'Agent 工作流', slug: 'reference/agent-workflow' },
+            { label: '数据模型', slug: 'reference/data-models' },
           ],
         },
       ],
