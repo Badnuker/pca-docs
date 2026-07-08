@@ -10,7 +10,13 @@ export default defineConfig({
   base: '/pca-docs/',
   markdown: {
     processor: unified({
-      rehypePlugins: [rehypeMermaid],
+      rehypePlugins: [[
+        rehypeMermaid,
+        {
+          strategy: 'img-svg',
+          dark: true,
+        }
+      ]],
     }),
     syntaxHighlight: {
       type: 'shiki',
