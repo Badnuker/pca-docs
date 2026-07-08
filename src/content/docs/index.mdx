@@ -10,36 +10,26 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 你可以在 [GitHub Release](https://github.com/Badnuker/price-compare-agent/releases) 下载最新版本。
 
 <CardGrid>
-  <Card title="🔍 自然语言比价" icon="add">
+  <Card title="🔍 自然语言比价">
     输入"300 以内运动蓝牙耳机"，自动解析意图、跨平台匹配、排序推荐
   </Card>
-  <Card title="📊 价格可视化" icon="add">
+  <Card title="📊 价格可视化">
     比价表格 + 柱状图，不同平台一目了然
   </Card>
-  <Card title="🤖 双模型兼容" icon="add">
-    支持 OpenAI 兼容格式和 Anthropic Claude，设置页一键切换
+  <Card title="🤖 双模型兼容">
+    支持 OpenAI 兼容格式和 Anthropic 兼容格式，设置页一键切换
   </Card>
-  <Card title="⚡ 实时反馈" icon="add">
+  <Card title="⚡ 实时步骤反馈">
     搜索时实时展示"理解需求→筛选→分析→推荐"四步进度
   </Card>
 </CardGrid>
 
-## 核心流程
+## 技术概览
 
-```mermaid
-flowchart TD
-    A([用户输入购买需求]) --> B{LLM 意图解析}
-    B -->|信息完整| C[加载商品数据]
-    B -->|信息不完整| D[追问补充]
-    D --> A
-    C --> E[关键词粗筛候选]
-    E --> F[LLM 匹配 + 排序 + 推荐]
-    F --> G[展示表格 + 柱状图 + 推荐]
-```
-
-## 快速体验
-
-1. 从 [Release 页面](https://github.com/Badnuker/price-compare-agent/releases) 下载安装包
-2. 首次打开会自动弹出设置页，填入你的 API Key
-3. 在搜索框输入想买的商品（如"找一款 300 以内适合运动的蓝牙耳机"）
-4. 查看比价结果和推荐
+| 层 | 技术 |
+|------|------|
+| 桌面框架 | Tauri 2 (Rust) |
+| 前端 | React 19 + TypeScript + Ant Design 5 |
+| 图表 | ECharts |
+| AI 接入 | async-openai + reqwest (OpenAI / Anthropic 双协议) |
+| 数据 | 离线 JSON，编译时嵌入，无需数据库 |

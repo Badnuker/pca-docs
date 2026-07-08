@@ -7,7 +7,7 @@ description: 如何安装和启动跨平台比价智能体
 
 从 [GitHub Release](https://github.com/Badnuker/price-compare-agent/releases) 页面下载最新版本：
 
-- **Windows**: 下载 `.msi` 安装包，双击安装
+- **Windows**: 下载 `.exe` 安装包，双击安装
 - **免安装**: 下载 `PriceCompare.exe` 直接运行（需系统已安装 WebView2）
 
 > Windows 10/11 已内置 WebView2，无需额外安装。
@@ -23,14 +23,7 @@ description: 如何安装和启动跨平台比价智能体
 | API Base URL | API 端点地址 | `https://api.deepseek.com` |
 | 模型 IDs | 模型标识符 | `deepseek-v4-flash` |
 
-支持的模型服务商：
-
-- **DeepSeek**: Base URL `https://api.deepseek.com`，模型如 `deepseek-v4-flash`
-- **Anthropic**: Base URL `https://api.anthropic.com`，模型如 `claude-sonnet-4-6`
-- **Ollama 本地**: Base URL `http://localhost:11434/v1`，模型如 `qwen2.5`
-- **通义千问**: Base URL `https://dashscope.aliyuncs.com/compatible-mode/v1`
-
-保存后即时生效，无需重启应用。
+> 任意兼容 OpenAI Chat Completion API 或 Anthropic Messages API 的服务商均可使用。切换后即时生效，无需重启。
 
 ## 开始比价
 

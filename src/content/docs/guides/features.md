@@ -56,14 +56,10 @@ description: 跨平台比价智能体的所有功能详解
 
 ## 双模型兼容
 
-应用内支持两种 AI 调用格式，在设置页一键切换：
+应用内支持两种 AI 调用格式，在设置页一键切换，即时生效，无需重启：
 
-| 格式 | 适用服务 |
-|------|---------|
-| OpenAI 兼容 | DeepSeek、通义千问、Ollama、vLLM 等 |
-| Anthropic | Claude (Sonnet/Haiku) |
-
-切换后即时生效，无需重启应用。
+- **OpenAI 兼容格式** — 兼容 OpenAI Chat Completion API 的所有服务商
+- **Anthropic 格式** — 兼容 Anthropic Messages API 的所有服务商
 
 ## 智能追问
 

@@ -5,28 +5,11 @@ description: 项目架构、模块划分和调用流程
 
 ## 分层架构
 
-```
-┌─────────────────────────────────┐
-│  前端 (React + TypeScript)       │
-│  SearchBox / ResultTable         │
-│  PriceChart / SettingsDrawer     │
-├─────────────────────────────────┤
-│  Tauri IPC (invoke / event)      │
-├─────────────────────────────────┤
-│  后端 (Rust)                     │
-│  ┌─────────────────────────────┐│
-│  │  commands/  ← 前端调用入口   ││
-│  ├─────────────────────────────┤│
-│  │  agent/     ← Agent 编排    ││
-│  │  orchestrator / intent      ││
-│  │  tools (数据加载/粗筛)       ││
-│  ├─────────────────────────────┤│
-│  │  ai/        ← LLM 调用      ││
-│  │  provider / openai_compat   ││
-│  │  anthropic                  ││
-│  └─────────────────────────────┘│
-└─────────────────────────────────┘
-```
+| 层 | 内容 |
+|------|------|
+| **前端** | React + TypeScript — SearchBox · ResultTable · PriceChart · SettingsDrawer |
+| **IPC** | Tauri invoke / event |
+| **后端** | commands/ (前端入口) → agent/ (Agent 编排) → ai/ (LLM Provider) |
 
 ## 模块职责
 
@@ -55,30 +38,13 @@ description: 项目架构、模块划分和调用流程
 
 ## 数据流
 
-```mermaid
-sequenceDiagram
-    participant UI as React 前端
-    participant IPC as Tauri IPC
-    participant Agent as AgentOrchestrator
-    participant LLM as LLM 服务
+**完整调用链路**：
 
-    UI->>IPC: invoke("search_products", {question})
-    IPC->>Agent: run(question)
-
-    Agent->>LLM: 意图解析
-    LLM-->>Agent: ParsedIntent
-    Agent-->>UI: emit step 0
-
-    Agent->>Agent: 关键词粗筛
-    Agent-->>UI: emit step 1
-
-    Agent->>LLM: 匹配 + 排序 + 推荐
-    LLM-->>Agent: 结果 JSON
-    Agent-->>UI: emit step 2-3
-
-    Agent-->>IPC: AgentResult
-    IPC-->>UI: 渲染结果
-```
+1. 前端 `invoke("search_products")` → Tauri IPC → `commands/query.rs`
+2. `orchestrator.run()` → LLM 意图解析 → 返回 ParsedIntent，emit step 0
+3. 关键词粗筛候选商品 → emit step 1
+4. LLM 匹配 + 排序 + 推荐 → 返回结果 JSON，emit step 2-3
+5. `AgentResult` 返回前端 → 渲染表格 + 柱状图 + 推荐
 
 ## 运行时配置切换
 
