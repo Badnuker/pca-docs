@@ -1,40 +1,45 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
-hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
-  actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+title: 跨平台比价智能体
+description: 基于大模型的桌面比价应用。输入自然语言，自动匹配京东/淘宝商品并生成比价报告。
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+**Price Compare Agent (PCA)** 是一个桌面应用程序，用户用自然语言描述想买的商品，AI 自动跨平台比价并给出推荐。
 
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+你可以在 [GitHub Release](https://github.com/Badnuker/price-compare-agent/releases) 下载最新版本。
+
+<CardGrid>
+  <Card title="🔍 自然语言比价" icon="add">
+    输入"300 以内运动蓝牙耳机"，自动解析意图、跨平台匹配、排序推荐
+  </Card>
+  <Card title="📊 价格可视化" icon="add">
+    比价表格 + 柱状图，不同平台一目了然
+  </Card>
+  <Card title="🤖 双模型兼容" icon="add">
+    支持 OpenAI 兼容格式和 Anthropic Claude，设置页一键切换
+  </Card>
+  <Card title="⚡ 实时反馈" icon="add">
+    搜索时实时展示"理解需求→筛选→分析→推荐"四步进度
+  </Card>
 </CardGrid>
+
+## 核心流程
+
+```mermaid
+flowchart TD
+    A([用户输入购买需求]) --> B{LLM 意图解析}
+    B -->|信息完整| C[加载商品数据]
+    B -->|信息不完整| D[追问补充]
+    D --> A
+    C --> E[关键词粗筛候选]
+    E --> F[LLM 匹配 + 排序 + 推荐]
+    F --> G[展示表格 + 柱状图 + 推荐]
+```
+
+## 快速体验
+
+1. 从 [Release 页面](https://github.com/Badnuker/price-compare-agent/releases) 下载安装包
+2. 首次打开会自动弹出设置页，填入你的 API Key
+3. 在搜索框输入想买的商品（如"找一款 300 以内适合运动的蓝牙耳机"）
+4. 查看比价结果和推荐
