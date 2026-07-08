@@ -2,10 +2,21 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import catppuccin from "@catppuccin/starlight";
+import rehypeMermaid from 'rehype-mermaid';
+import { unified } from '@astrojs/markdown-remark';
 
 // https://astro.build/config
 export default defineConfig({
   base: '/pca-docs/',
+  markdown: {
+    processor: unified({
+      rehypePlugins: [rehypeMermaid],
+    }),
+    syntaxHighlight: {
+      type: 'shiki',
+      excludeLangs: ['mermaid'],
+    },
+  },
   integrations: [
     starlight({
       plugins: [catppuccin()],

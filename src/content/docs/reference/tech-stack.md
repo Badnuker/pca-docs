@@ -38,12 +38,13 @@ Tauri 用操作系统内置的 WebView2 渲染界面，不需要打包整个 Chr
 
 项目定义了统一的 `LlmProvider` trait，不同服务商只需实现 `chat()` 方法：
 
-```
-LlmProvider trait
-  ├── OpenAiCompatProvider  (async-openai)
-  │     └── DeepSeek / Ollama / vLLM / 通义千问 ...
-  └── AnthropicProvider     (reqwest)
-        └── Claude Sonnet / Haiku ...
+```mermaid
+flowchart TD
+    trait["LlmProvider trait<br/>chat(messages) → response"]
+    openai["OpenAiCompatProvider<br/>async-openai"]
+    anthropic["AnthropicProvider<br/>reqwest"]
+    trait --> openai
+    trait --> anthropic
 ```
 
 上层 Agent 编排代码只依赖 `Arc<dyn LlmProvider>`，不感知底层是哪个模型。

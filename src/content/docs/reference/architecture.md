@@ -48,11 +48,27 @@ LlmProvider trait  { chat(messages) → response }
 
 ## 数据流
 
-1. 前端 `invoke("search_products")` → Tauri IPC → `commands/query.rs`
-2. `orchestrator.run()` → LLM 意图解析 → 返回 ParsedIntent，emit step 0
-3. 关键词粗筛候选商品 → emit step 1
-4. LLM 匹配 + 排序 + 推荐 → 返回结果 JSON，emit step 2-3
-5. `AgentResult` 返回前端 → 渲染表格 + 柱状图 + 推荐
+```mermaid
+sequenceDiagram
+    participant UI as React 前端
+    participant Cmd as commands/query.rs
+    participant Agent as AgentOrchestrator
+    participant LLM as LLM 服务
+
+    UI->>Cmd: invoke("search_products")
+    Cmd->>Agent: run(question)
+
+    Agent->>LLM: 意图解析
+    LLM-->>Agent: ParsedIntent
+    Agent-->>UI: emit step 0
+
+    Agent->>Agent: 关键词粗筛
+    Agent-->>UI: emit step 1
+
+    Agent->>LLM: 匹配 + 排序 + 推荐
+    LLM-->>Agent: 结果 JSON
+    Agent-->>UI: emit step 2-3
+```
 
 ## 运行时配置切换
 

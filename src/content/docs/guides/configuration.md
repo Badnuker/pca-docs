@@ -31,7 +31,7 @@ description: 模型设置、API 配置和持久化说明
 
 开发时可在 `src-tauri/.env` 中配置默认值：
 
-```env
+```txt
 LLM_PROVIDER=openai
 LLM_API_KEY=sk-xxxx
 LLM_BASE_URL=https://api.deepseek.com
