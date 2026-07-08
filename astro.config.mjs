@@ -59,6 +59,12 @@ export default defineConfig({
             { label: '数据模型', slug: 'reference/data-models' },
           ],
         },
+        {
+          label: '更多',
+          items: [
+            { label: '更新日志', slug: 'changelog' },
+          ],
+        },
       ],
     }),
   ],
