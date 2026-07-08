@@ -5,18 +5,16 @@ description: 跨平台比价智能体使用的技术栈详解
 
 ## 总览
 
-| 层 | 技术 | 版本 | 说明 |
-|------|------|------|------|
-| 桌面框架 | Tauri | 2.x | Rust 后端 + WebView 前端，打包体积 ~5MB |
-| 后端语言 | Rust | ≥1.80 | Agent 编排 + LLM 调用 + 配置管理 |
-| 前端框架 | React | 19 | 函数组件 + Hooks |
-| 前端语言 | TypeScript | 6.x | 类型安全 |
-| UI 库 | Ant Design | 5.x | 表格、表单、步骤条、抽屉 |
-| 图表 | ECharts | 6.x | 价格柱状图 |
-| AI SDK | async-openai | 0.41 | OpenAI 兼容格式调用 |
-| HTTP 客户端 | reqwest | 0.13 | Anthropic API 调用 |
-| 异步运行时 | tokio | 1.x | Rust 异步运行时 |
-| 序列化 | serde + serde_json | 1.x | JSON 序列化/反序列化 |
+| 层 | 技术 | 说明 |
+|------|------|------|
+| 桌面框架 | Tauri 2 | Rust 后端 + WebView 前端，打包体积 ~5MB |
+| 后端语言 | Rust | Agent 编排 + LLM 调用 + 配置管理 |
+| 前端框架 | React + TypeScript | 函数组件 + Hooks，类型安全 |
+| UI 库 | Ant Design 5 | 表格、表单、步骤条、抽屉 |
+| 图表 | ECharts | 价格柱状图 |
+| AI SDK | async-openai + reqwest | OpenAI 兼容 + Anthropic 双协议 |
+| 异步运行时 | tokio | Rust 异步运行时 |
+| 序列化 | serde + serde_json | JSON 序列化/反序列化 |
 
 ## 为什么选 Tauri
 
