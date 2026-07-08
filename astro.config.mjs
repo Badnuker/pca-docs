@@ -28,6 +28,8 @@ export default defineConfig({
           items: [
             { label: '快速开始', slug: 'guides/quickstart' },
             { label: '功能介绍', slug: 'guides/features' },
+            { label: '项目结构', slug: 'guides/project-structure' },
+            { label: '一次搜索的旅程', slug: 'guides/how-it-works' },
             { label: '设置与配置', slug: 'guides/configuration' },
           ],
         },

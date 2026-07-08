@@ -23,22 +23,30 @@ description: 项目架构、模块划分和调用流程
 
 ## 前后端通信
 
-两种方式：
+传统 Web 应用用 HTTP + fetch 通信，但 Tauri 桌面应用不走这条路——前后端在同一个进程里，通过 IPC（进程间通信）直接调用。
 
-| 方式 | 方向 | 用途 |
-|------|------|------|
-| `invoke()` | 前端 → 后端 | 触发搜索、读写设置 |
-| `listen()` | 后端 → 前端 | Agent 步骤事件实时推送 |
+| 方式 | 方向 | 做什么 | 代码示例 |
+|------|------|--------|---------|
+| `invoke` | 前端 → 后端 | 触发搜索、读写设置 | `invoke("search_products", { question })` |
+| `emit` / `listen` | 后端 → 前端 | Agent 每完成一步，前端进度条前进一步 | `listen("agent-step", callback)` |
 
-步骤事件格式：
+**invoke 是什么**：在 JavaScript 里写 `invoke("命令名", 参数)`，Tauri 自动找到对应的 Rust 函数执行，返回值直接回到 JS。全程不走网络、不经过 HTTP 协议——比 fetch 快，也不用处理 CORS。
 
-```json
-{ "index": 0, "label": "理解需求" }
+**emit/listen 是什么**：后端每完成一步就 `emit("agent-step", { index: 0, label: "理解需求" })`，前端用 `listen("agent-step", ...)` 收到后更新进度条。这是实时的、毫秒级的推送。
+
+## AI 接入层设计
+
+不同 AI 厂商的 API 格式不同，但做的事情一样——发消息、收回复。我们用 Rust 的 **trait**（类似 TypeScript 的 interface）抽象这个过程：
+
+```
+LlmProvider trait  { chat(messages) → response }
+  ├── OpenAiCompatProvider (async-openai)
+  └── AnthropicProvider    (reqwest)
 ```
 
-## 数据流
+上层 Agent 编排代码只依赖 `Arc<dyn LlmProvider>`，不关心底层是 DeepSeek 还是 Claude。想换模型？改一行配置，不碰业务代码。
 
-**完整调用链路**：
+## 数据流
 
 1. 前端 `invoke("search_products")` → Tauri IPC → `commands/query.rs`
 2. `orchestrator.run()` → LLM 意图解析 → 返回 ParsedIntent，emit step 0
