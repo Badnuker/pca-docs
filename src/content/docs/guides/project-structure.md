@@ -81,7 +81,7 @@ price-compare-agent/
 每个组件职责单一，像一个乐高积木：
 
 - **ChatInput**：底部输入栏，支持 Enter 发送、Shift+Enter 换行
-- **ThinkingBlock**：可折叠的 LLM 思考过程展示
+- **ThinkingBlock**：三步进度指示器（解析意图→搜索商品→生成推荐），带计时器
 - **ResultCard**：商品详情卡片，悬停 Tooltip + 详情 Drawer
 - **PriceComparison**：ECharts 价格对比图，支持 PNG 导出
 - **SettingsModal**：模型设置弹窗，API 格式 / Key / 地址 / 模型
