@@ -6,20 +6,20 @@ description: 跨平台比价智能体的版本更新记录
 ## v2.0.0 — 2026-07-10
 
 ### 新功能
-- **流式输出**：OpenAI + Anthropic 双端 SSE streaming，LLM 回复实时打字显示
+- **流式输出**：OpenAI + Anthropic 双端 SSE streaming，推荐理由实时打字显示
 - **暗色主题**：GitHub Dark 风格，CSS 变量体系，全组件覆盖
-- **对话历史**：左侧 Sidebar 展示历史对话，支持多轮追问、上下文记忆
-- **思考可见**：LLM 推理过程可展开查看
-- **Markdown 渲染**：推荐理由支持富文本格式
+- **对话历史**：左侧 Sidebar 多轮对话，上下文记忆，支持重命名/删除
 - **欢迎页**：带建议卡片和 logo 的 WelcomeScreen
-- **缩放支持**：Ctrl+滚轮调整界面
-- **图表导出**：价格对比图 PNG 导出
+- **缩放支持**：Ctrl+滚轮调整界面（0.75x–1.5x）
+- **数据源切换**：移除离线 JSON 数据集，LLM 根据训练数据动态生成商品信息
 
 ### 改进
-- ResultCard 商品详情卡片 + Drawer
-- PriceComparison 价格对比图表 + 导出
-- ChatInput 底部输入栏 + ThinkingBlock 思考块
-- Agent 编排升级：意图识别增强、上下文传递
+- ResultCard 商品详情卡片 + Drawer 展开
+- PriceComparison ECharts 价格对比图表
+- ChatInput 底部输入栏 + 快捷模板
+- ThinkingBlock 三步进度指示
+- 支持中途停止生成（AbortController）
+- Agent 编排升级：带上下文的多轮对话
 
 ---
 
