@@ -12,8 +12,8 @@ description: 跨平台比价智能体使用的技术栈详解
 | 前端框架 | React + TypeScript | 函数组件 + Hooks，类型安全 |
 | UI 库 | Ant Design 5 | 表格、表单、步骤条、抽屉 |
 | 图表 | ECharts | 价格柱状图 |
-| AI SDK | async-openai + reqwest | OpenAI 兼容 + Anthropic 双协议 |
-| 异步运行时 | tokio | Rust 异步运行时 |
+| AI SDK | async-openai + reqwest + futures-util | OpenAI/Anthropic 双协议，支持 SSE 流式输出 |
+| 异步运行时 | tokio | Rust 异步运行时 + SSE streaming |
 | 序列化 | serde + serde_json | JSON 序列化/反序列化 |
 
 ## 为什么选 Tauri

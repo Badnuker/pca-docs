@@ -61,6 +61,26 @@ description: 跨平台比价智能体的所有功能详解
 - **OpenAI 兼容格式** — 兼容 OpenAI Chat Completion API 的所有服务商
 - **Anthropic 格式** — 兼容 Anthropic Messages API 的所有服务商
 
+## 流式输出
+
+AI 回复不再等待全部完成后一次性显示，而是像打字一样逐字输出。支持 OpenAI 和 Anthropic 双端的 SSE streaming。用户可以实时看到 LLM 的分析过程，体验更流畅。
+
+## 暗色主题
+
+全界面 GitHub Dark 风格暗色主题，通过 CSS 变量体系覆盖所有 Ant Design 组件。长时间使用不疲劳，OLED 屏幕更省电。
+
+## 对话历史
+
+左侧 Sidebar 保存历史对话记录，支持多轮追问。Agent 会携带上下文信息，用户说"把预算改成 500"时，AI 知道之前讨论的是什么商品。
+
+## 思考可见
+
+LLM 的推理过程通过 ThinkingBlock 组件展示，用户可以展开查看 AI 如何分析需求、筛选商品、生成推荐。适合调试 prompt 和了解 AI 决策逻辑。
+
+## 欢迎页
+
+首次打开应用时展示 WelcomeScreen，包含常用的搜索建议卡片，点击即可快速开始比价。
+
 ## 智能追问
 
 当用户输入信息不足时，AI 不会盲目推荐，而是追问补充。例如输入"买个耳机"，系统会提示：
